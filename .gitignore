@@ -4,4 +4,4 @@
 venv/
 
 # logging files
-logging/*.log
+/logging/
