@@ -1,3 +1,4 @@
+from datetime import datetime
 from getpass import getpass
 from random import randint
 from selenium import webdriver
@@ -8,14 +9,16 @@ from time import sleep
 
 # If you don"t want to manually enter your netid and password
 # every time, you can pass them as variables in your script
+args = sys.argv[1:]
+assert len(args) == 2
+netid, password = tuple(args)
 
-# args = sys.argv[1:]
-# assert len(args) == 2
-# netid, password = tuple(args)
+# Get user's netid and password
+# netid = input("  netid > ")
+# password = getpass()
 
-# Get users netid and password
-netid = input("  netid > ")
-password = getpass()
+timestamp = datetime.now().strftime("hh:mm tt dddd, dd MMMM yyyy")
+print(f"Process Started at {timestamp}")
 
 # Headless Chrome
 options = webdriver.ChromeOptions()
@@ -62,7 +65,7 @@ try:
     driver.find_element_by_id("submit").click()
 
     driver.close()
-    print(f"Successfully completed {netid}\'s daily check")
+    print("Successfully completed daily check")
 
 except (ElementClickInterceptedException, ElementNotInteractableException, NoSuchElementException,
         StaleElementReferenceException):

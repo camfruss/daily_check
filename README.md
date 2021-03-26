@@ -40,10 +40,26 @@ You may also need to allow `chromedriver` to run in System Preferences (your com
 
 If your terminal ever gets stuck or freezes (it won't), press `⌘C`.
 
-#### Crontab
+## Full Automation
 
 If you have your own server running (you could set up a free micro.t2 instance on AWS), or you are always on your computer 
-at a certian time, using crontab would automate the entire process. I do not have either set up. 
+at a certian time, using crontab would automate the entire process.
+
+Alternatively, you can set a launchd task set to run every day at 4:00 pm, which will run the script even if your computer 
+is [asleep](https://developer.apple.com/forums/thread/52369), but not powered off. To implement this:
+1. Edit `daily_check.py` such that lines 12-14 are uncommented and lines 17, 18 are commented out (so we can pass your netid and 
+password into the shell command directly).
+2. In `com.cornell.dailycheck.plist`, update the `ProgramArguments`, `StandardOutPath`, and `StandardErrorPath` keys with 
+   the correct file paths and your netid and password (storing passwords in plain-text is always a bad idea, but ideally your cornell password is unique). If you have a solution to this issue,
+give this a PR. 
+   - You don't technically need to `StandardOutPath` or `StandardErrorPath`, but this will record the time when `daily_check.py`
+   is executed and make you aware of any errors that arise. So, it's nice to have.
+3. Copy the `.plist` file into the `LaunchAgents` folder on your mac:
+   ```
+   cp  ~/PycharmProjects/daily_check/com.cornell.dailycheck.plist ~/Library/LaunchAgents/
+   ```
+4. Restart your computer
+5. **Once the daily check is no longer required, remove `com.cornell.dailycheck.plist` from `~/Library/LaunchAgents/`**
 
 ## Disclaimer
 This script allows you to complete the daily check from the terminal, but is not full "automation".
