@@ -49,10 +49,10 @@ try:
         exit()
 
     # Check "no" for all questions
-    driver.find_element_by_id("positivetestever-no").click()
     driver.find_element_by_id("covidsymptoms-no").click()
-    driver.find_element_by_id("contactdiagnosed-no").click()
     driver.find_element_by_id("contactsymptoms-no").click()
+    driver.find_element_by_id("exposure-no").click()
+    driver.find_element_by_id("positivetestever-no").click()
 
     # Submit x2
     sleep(randint(3, 6))  # pausing in case they
